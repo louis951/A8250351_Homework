@@ -15,6 +15,7 @@ public:
 	void askCard();//玩家要牌
 	void sizeCard();//判斷手排大小
 	void pass();//是否有五張直接獲勝
+	void askCard12();////發前兩張牌
 	void point(); //結算金錢
 private:
 	int card[53];//牌有53張
