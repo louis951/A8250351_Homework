@@ -11,9 +11,10 @@ public:
 	Card();//
 	void input(int);//投入賭注
 	void Shuffle();//洗牌
-	void judgeSize();//判斷牌的大小是否超過21點
+	int judgeSizeA();//判斷牌的大小是否超過21點
+	int judgeSizeB();
 	void askCard();//玩家要牌
-	void sizeCard();//判斷手排大小
+	void sizeCard();//判斷手牌大小
 	void pass();//是否有五張直接獲勝
 	void askCard12();////發前兩張牌
 	void point(); //結算金錢
