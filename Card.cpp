@@ -20,4 +20,21 @@ Card::Card() {
 	for (int i = 0; i < 52; i++)
 		card[i] = i % 13 + 1;//把牌變成只有1~13
 	askCard12();
+	int Card::judgeSizeA() {
+	int sum = 0;
+	for (int i = 0; i < 5; i++) {
+		sum += cardNumA[i];
+	}
+	sum += 10;
+	if (sum > 21) {
+		sum -= 10;
+	}
+	if (sum > 21) {
+		cout << "player win" << endl;
+		way = true;
+		point();
+	}
+	return sum;
+}
+
 }
