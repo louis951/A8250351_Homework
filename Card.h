@@ -3,30 +3,41 @@
 #include<ctime>
 #include<string>
 #include<iostream>
+#include <cstdlib> // 亂數相關函數 
+#include <ctime>    //時間相關函數 
 using namespace std;
 
 class Card
 {
 public:
 	Card();//
-	void input(int);//投入賭注
+	void input();//投入賭注
 	void Shuffle();//洗牌
 	int judgeSizeA();//判斷牌的大小是否超過21點
-	void askCard();//玩家要牌
-	void sizeCard();//判斷手牌大小
-	void pass();//是否有五張直接獲勝
-	void askCard12();////發前兩張牌
+	int judgeSizeB();
+	void askCardB();//玩家要牌
+	void askCardA();//莊家小於17點一定要加牌
+	void askCard12();//發前兩張牌
+	void printNowA();//印出當前牌數 莊家
+	void printNowB();//印出當前牌數 玩家
 	void point(); //結算金錢
+	void end();//最後結算
+	int getValueA();
+	int getValueB();
+	static int getRound();//第幾局
 private:
-	int card[52];//牌有52張
-	char cardName[13];//知道當前牌是什麼 比如AJQK這種顯示出來
-	char Suit[4];//花色
-	int valueA[5];//牌的數值
-	int valueB[5];
+	int card[53];//牌有52張
+	int cardValue[53];//牌的數值
+	string cardName[53];//牌的名子
+	int cardrandom[53];//亂數數值
+	int SuitrandomA[6] = {};//數值花色
+	int SuitrandomB[6] = {};
+	int valueA;//莊家牌數
+	int valueB;
 	int money;//你有多少錢，設定10000元
 	int stake;//賭注
 	int cardNumA[5];//莊家的手牌
 	int cardNumB[5];//玩家的手牌
-	bool way;//判斷輸贏
+	static int round;
 };
 #endif
