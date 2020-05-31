@@ -1,64 +1,12 @@
+#include"Card.h"
 #include<iostream>
-#include<time.h>
 #include<string>
-#include"card.h"
+#include <cstdlib> // äº‚æ•¸ç›¸é—œå‡½æ•¸ 
+#include <ctime>    //æ™‚é–“ç›¸é—œå‡½æ•¸
 using namespace std;
-int main()
-{
-	cout << "A¶W¹L21ÂI®É¥iµø¬°1ÂI¡A¢Ø¢ß¢Ù=10ÂI,¨C¤H¥ýµo¨â±iµP,µM«á¸ò²ø®a¤ñ¤j¤p" << endl;//³W«h
-	srand(time(NULL));
-	int a1 = rand();
-	int a2 = rand();
-	a1 = a1 % 52+1;
-	a2 = a2 % 52 + 1;//¶Ã¼Æ
-	/*­n¥[a1=a2f¨¾§b*/
-	
-	//§PÂ_¤âµPÃC¦â
-	if (a1<= 13 && a1> 0)
-		cout << '\6';
-	else if (a1 > 13 && a1 <= 26)
-		cout << '\3';
-	else if (a1 > 26 && a1 <= 39)
-		cout << '\4';
-	else 
-		cout << '\5';
-	a1 %= 13+1;
-	cout << a1<<endl;//²Ä¤@°ÆµP
-
-	if (a2<= 13 && a2 > 0)
-		cout << '\6';
-	else if (a2 > 13 && a2 <= 26)
-		cout << '\3';
-	else if (a2 > 26 && a2 <= 39)
-		cout << '\4';
-	else
-		cout << '\5';
-	a2 %= 13+1;
-	cout << a2<<endl;//²Ä¤G°ÆµP
-	
-	int cardNum = a1 + a2;//¤âµP¬Û¥[
-
-	Card cardNum1;
-	cardNum1.sizeCard();//§PÂ_¤âµP¤j¤p ­n¸Éint
-
-	int money;
-	cin >> money;
-	Card money1;
-	money1.input(money);//¿é¤J½äª÷
-	
-	Card point;
-	point.point();//µ²ºâª÷¿ú
-	
-
-	
-	system("pause");
-
-
-
-
-
-
-
-
-
+int main() {
+	cout << "æ­¡è¿Žä¾†åˆ°21é»žçš„ä¸–ç•Œï¼Œåœ¨é€™è£¡ä½ å¯ä»¥ç›¡æƒ…çŽ©è€ç›´åˆ°ä½ çš„éŒ¢éŒ¢å…¨éƒ¨èŠ±å…‰ç‚ºæ­¢ã€‚" << endl;
+	cout << "éŠæˆ²è¦å‰‡å¾ˆç°¡å–®ï¼ŒAå¯ä»¥ç•¶æˆ11æˆ–1(è‡ªå‹•ç•¶11ï¼Œé™¤éžAæ­¤æ™‚ç‚º11æ™‚æœƒçˆ†æŽ‰)ã€JQKç­‰åŒæ–¼10é»žè€Œå…¶ä»–é»žæ•¸å°±ç­‰åŒæ–¼ä»–çš„æ•¸å­—ã€‚" << endl;
+	cout << "åœ¨éŠæˆ²ä¸€é»žé»žè³­æ³¨æ˜¯ä¸€å€‹å¾ˆæ£’çš„èª¿é©ï¼Œè€Œæˆ‘å€‘çš„è¦å‰‡æ˜¯è´:å£“å¤šå°‘è´å¤šå°‘ è¼¸:å£“å¤šå°‘è¼¸å¤šå°‘ï¼Œé‚£æˆ‘å€‘å°±æ­£å¼é–‹å§‹å§ï¼" << endl;
+	Card card;
 }
