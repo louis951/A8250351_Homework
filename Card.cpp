@@ -6,35 +6,57 @@
 #include <cstdlib>
 using namespace std;
 
+int Card::round = 0;
+int Card::getRound() {
+	return round;
+}
 Card::Card() {
-	srand(time(NULL));
-	for (int i=0; i < 5; i++) {
+	card[0] = 0;
+	for (int i = 1; i < 14; i++) {
+		card[i] = i;
+		card[i + 13] = i;
+		card[i + 26] = i;
+		card[i + 39] = i;
+	}
+
+	for (int i = 0; i < 53; i++) 
+		cardrandom[i] = card[i];
+
+	cardValue[0] = 0;
+	for (int i = 1; i < 53; i++) {
+		if (card[i] <= 10)
+			cardValue[i] = i;
+		else
+			cardValue[i] = 10;
+	}
+
+	cardName[0] = "";
+	for (int i = 0; i < 4; i++) {
+		cardName[1 + i * 13] = "A";
+		cardName[2 + i * 13] = "2";
+		cardName[3 + i * 13] = "3";
+		cardName[4 + i * 13] = "4";
+		cardName[5 + i * 13] = "5";
+		cardName[6 + i * 13] = "6";
+		cardName[7 + i * 13] = "7";
+		cardName[8 + i * 13] = "8";
+		cardName[9 + i * 13] = "9";
+		cardName[10 + i * 13] = "10";
+		cardName[11 + i * 13] = "J";
+		cardName[12 + i * 13] = "Q";
+		cardName[13 + i * 13] = "K";
+	}
+
+	money = 10000;
+	stake = 0;
+
+	valueA = 0;
+	valueB = 0;
+	for (int i = 0; i < 5; i++) {
 		cardNumA[i] = 0;
 		cardNumB[i] = 0;
 	}
-	money = 10000;
-	char Suit[4] = { '\6','\3','\4','\5' };
-	char cardName[13] = { 'A','2','3','4' ,'5' ,'6' ,'7' ,'8','9','10','J','Q','K' };
-	int valueA[5] = {};
-	int valueB[5] = {};
-	for (int i = 0; i < 52; i++)
-		card[i] = i % 13 + 1;//把牌變成只有1~13
-	askCard12();
-	int Card::judgeSizeA() {
-	int sum = 0;
-	for (int i = 0; i < 5; i++) {
-		sum += cardNumA[i];
-	}
-	sum += 10;
-	if (sum > 21) {
-		sum -= 10;
-	}
-	if (sum > 21) {
-		cout << "player win" << endl;
-		way = true;
-		point();
-	}
-	return sum;
-}
 
+	srand(time(NULL));
+	round++;
 }
