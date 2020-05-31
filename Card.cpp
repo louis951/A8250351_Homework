@@ -1,11 +1,10 @@
-#ifndef Card_H
-#define Card_H
+#include"Card.h"
+#include<iostream>
 #include<ctime>
 #include<string>
-#include<iostream>
-#include <cstdlib>
+#include <cstdlib> // 亂數相關函數 
+#include <ctime>    //時間相關函數 
 using namespace std;
-
 int Card::round = 0;
 int Card::getRound() {
 	return round;
@@ -160,4 +159,140 @@ int Card::getValueA() {
 }
 int Card::getValueB() {
 	return valueB;
+}
+void Card::askCardA() {
+	int sum = 0;
+	sum = judgeSizeA();
+	int randomValue = 0, x = 1;
+	for (; x == 1;) {
+		randomValue = rand() % 52 + 1;
+		if (cardrandom[randomValue] != 0) {
+			cardNumA[valueA] = cardrandom[randomValue];
+			cardrandom[randomValue] = 0;
+			x--;
+			valueA++;
+			SuitrandomA[valueA] = randomValue;
+			printNowA();
+			sum = judgeSizeB();
+		}
+	}
+}
+void Card::askCardB() {
+	int sum = 0;
+	sum = judgeSizeB();
+	int randomValue = 0, x = 1;
+	if (sum<=21) {
+		for (; x == 1;) {
+			randomValue = rand() % 52 + 1;
+			if (cardrandom[randomValue] != 0) {
+				cardNumB[valueB] = cardrandom[randomValue];
+				cardrandom[randomValue] = 0;
+				x--;
+				valueB++;
+				SuitrandomB[valueB] = randomValue;
+				printNowB();
+				sum = judgeSizeB();
+			}
+		}
+	}
+}
+void Card::askCard12() {
+	int randomValue = 0, x = 1;
+	for (; x == 1;) {
+		randomValue = rand() % 52 + 1;
+		if (valueA < 2 && cardrandom[randomValue] != 0) {
+			cardNumA[valueA] = cardrandom[randomValue];
+			cardrandom[randomValue] = 0;
+			valueA++;
+			SuitrandomA[valueA] = randomValue;
+		}
+		else if (valueB < 2 && cardrandom[randomValue] != 0) {
+			cardNumB[valueB] = cardrandom[randomValue];
+			cardrandom[randomValue] = 0;
+			valueB++;
+			SuitrandomB[valueB] = randomValue;
+		}
+		if (valueA == 2 && valueB == 2) {
+			x--;
+		}
+	}
+}
+void Card::printNowA() {
+	cout << "莊家目前手牌: ";
+	for (int i = 0, j = 1; i < valueA; i++, j++) {
+		if (SuitrandomA[j] <= 13)
+			cout << "黑桃";
+		else if (13 < SuitrandomA[j] && SuitrandomA[j] <= 26)
+			cout << "愛心";
+		else if (26 < SuitrandomA[j] && SuitrandomA[j] <= 39)
+			cout << "方塊";
+		else if (39 < SuitrandomA[j] && SuitrandomA[j] <= 52)
+			cout << "梅花";
+		cout << cardName[cardNumA[i]] << " ";
+	}
+	cout << endl;
+}
+void Card::printNowB() {
+	cout << "玩家目前手牌: ";
+	for (int i = 0, j = 1; i < valueB; i++, j++) {
+		if (SuitrandomB[j] <= 13)
+			cout << "黑桃";
+		else if (13 < SuitrandomB[j] && SuitrandomB[j] <= 26)
+			cout << "愛心";
+		else if (26 < SuitrandomB[j] && SuitrandomB[j] <= 39)
+			cout << "方塊";
+		else if (39 < SuitrandomB[j] && SuitrandomB[j] <= 52)
+			cout << "梅花";
+		cout << cardName[cardNumB[i]] << " ";
+	}
+	cout << endl;
+}
+void Card::end() {
+	if (valueB == 5 && judgeSizeB() <= 21) {
+		printNowA();
+		printNowB();
+		cout << "恭喜玩家過五關獲得勝利" << endl;
+		money += stake*2;
+		point();
+	}
+	else if (valueA == 5 && judgeSizeA() <= 21) {
+		printNowA();
+		printNowB();
+		cout << "算你雖小莊家過五關你輸了" << endl;
+		money -= stake;
+		point();
+	}
+	else if (judgeSizeB() > 21) {
+		cout << "你超過21點你爆了" << endl;
+		money -= stake;
+		point();
+	}
+	else if (judgeSizeA() > 21) {
+		printNowA();
+		printNowB();
+		cout << "莊家超過21點莊家爆了" << endl;
+		money += stake*2;
+		point();
+	}
+	else if (judgeSizeA() < judgeSizeB()) {
+		printNowA();
+		printNowB();
+		cout << "你贏了" << endl;
+		money += stake*2;
+		point();
+	}
+	else if (judgeSizeA() == judgeSizeB()) {
+		printNowA();
+		printNowB();
+		cout << "平手" << endl;
+		point();
+	}
+	else {
+		printNowA();
+		printNowB();
+		cout << "你輸了" << endl;
+		money -= stake;
+		point();
+	}
+	cout << "------------------------------------------------------------------------------------------------------------------------------" << endl;
 }
