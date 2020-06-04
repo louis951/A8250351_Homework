@@ -3,6 +3,8 @@
 #include"Bet.h"
 #include<ctime>
 #include<string>
+#include<iomanip>
+#include<vector>
 #include <cstdlib> // 亂數相關函數 
 #include <ctime>    //時間相關函數 
 using namespace std;
@@ -11,23 +13,17 @@ int Card::getRound() {
 	return round;
 }
 Card::Card() {
-	card[0] = 0;
-	for (int i = 1; i < 14; i++) {
-		card[i] = i;
-		card[i + 13] = i;
-		card[i + 26] = i;
-		card[i + 39] = i;
+	for (int i = 0; i < 53; i++) {
+		card.push_back(i);
+		cardrandom.push_back(i);
 	}
 
-	for (int i = 0; i < 53; i++)
-		cardrandom[i] = card[i];
-
-	cardValue[0] = 0;
+	cardValue.push_back(0);
 	for (int i = 1; i < 53; i++) {
 		if (card[i] <= 10)
-			cardValue[i] = i;
+			cardValue.push_back(card[i]);
 		else
-			cardValue[i] = 10;
+			cardValue.push_back(10);
 	}
 
 	cardName[0] = "";
@@ -53,10 +49,14 @@ Card::Card() {
 	valueA = 0;
 	valueB = 0;
 	for (int i = 0; i < 5; i++) {
-		cardNumA[i] = 0;
-		cardNumB[i] = 0;
+		cardNumA.push_back(0);
+		cardNumB.push_back(0);
 	}
 
+	for (int i = 0; i < 6; i++) {
+		SuitrandomA.push_back(0);
+		SuitrandomB.push_back(0);
+	}
 	srand(time(NULL));
 	round++;
 }
@@ -76,7 +76,7 @@ void Card::Shuffle() {
 	cardValue[0] = 0;
 	for (int i = 1; i < 53; i++) {
 		if (card[i] <= 10)
-			cardValue[i] = i;
+			cardValue[i] = card[i];
 		else
 			cardValue[i] = 10;
 	}
@@ -104,6 +104,12 @@ void Card::Shuffle() {
 		cardNumA[i] = 0;
 		cardNumB[i] = 0;
 	}
+
+	for (int i = 0; i < 6; i++) {
+		SuitrandomA[i] = 0;
+		SuitrandomB[i] = 0;
+	}
+
 	srand(time(NULL));
 	round++;
 	askCard12();
@@ -155,7 +161,7 @@ void Card::point() const {
 		exit(0);
 	}
 	else
-		cout << getMoney() << endl;
+		cout <<"現有金錢: "<< getMoney() << endl;
 }
 int Card::getValueA() const {
 	return valueA;
@@ -233,6 +239,7 @@ void Card::printNowA() const {
 			cout << "梅花";
 		cout << cardName[cardNumA[i]] << " ";
 	}
+	cout << setw(2) << fixed << "手上點數: " << judgeSizeA();
 	cout << endl;
 }
 void Card::printNowB() const {
@@ -248,6 +255,7 @@ void Card::printNowB() const {
 			cout << "梅花";
 		cout << cardName[cardNumB[i]] << " ";
 	}
+	cout <<setw(2)<<fixed<< "手上點數: " << judgeSizeB();
 	cout << endl;
 }
 void Card::end()  {
@@ -268,6 +276,8 @@ void Card::end()  {
 		point();
 	}
 	else if (judgeSizeB() > 21) {
+		printNowA();
+		printNowB();
 		cout << "你超過21點你爆了" << endl;
 		setMoney(-getStake());
 		point();
