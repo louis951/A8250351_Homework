@@ -8,18 +8,24 @@
 #include <cstdlib> // 亂數相關函數 
 #include <ctime>    //時間相關函數 
 using namespace std;
-int Card::round = 0;
-int Card::getRound() {
+
+template <typename T>
+int Card<T>::round = 0;
+
+template <typename T>
+int Card<T>::getRound() {
 	return round;
 }
-Card::Card() {
-	for (int i = 0; i < 53; i++) {
+
+template <typename T>
+Card<T>::Card() {
+	for (T i = 0; i < 53; i++) {
 		card.push_back(i);
 		cardrandom.push_back(i);
 	}
 
 	cardValue.push_back(0);
-	for (int i = 1; i < 53; i++) {
+	for (T i = 1; i < 53; i++) {
 		if (card[i] <= 10)
 			cardValue.push_back(card[i]);
 		else
@@ -48,21 +54,23 @@ Card::Card() {
 
 	valueA = 0;
 	valueB = 0;
-	for (int i = 0; i < 5; i++) {
+	for (T i = 0; i < 5; i++) {
 		cardNumA.push_back(0);
 		cardNumB.push_back(0);
 	}
 
-	for (int i = 0; i < 6; i++) {
+	for (T i = 0; i < 6; i++) {
 		SuitrandomA.push_back(0);
 		SuitrandomB.push_back(0);
 	}
 	srand(time(NULL));
 	round++;
 }
-void Card::Shuffle() {
+
+template <typename T>
+void Card<T>::Shuffle() {
 	card[0] = 0;
-	for (int i = 1; i < 14; i++) {
+	for (T i = 1; i < 14; i++) {
 		card[i] = i;
 		card[i + 13] = i;
 		card[i + 26] = i;
@@ -116,7 +124,9 @@ void Card::Shuffle() {
 	printNowA();
 	printNowB();
 }
-void Card::input()  {
+
+template <typename T>
+void Card<T>::input()  {
 	int stake = 0;
 	cout << "請下注" << endl;
 	cin >> stake;
@@ -127,9 +137,11 @@ void Card::input()  {
 		setStake(stake);
 	}
 }
-int Card::judgeSizeA() const {
-	int sum = 0;
-	int count = 0;
+
+template <typename T>
+T Card<T>::judgeSizeA()  {
+	T sum = 0;
+	T count = 0;
 	for (int i = 0; i < valueA; i++) {
 		sum += cardValue[cardNumA[i]];
 		if (cardValue[cardNumA[i]] == 1) {
@@ -141,9 +153,11 @@ int Card::judgeSizeA() const {
 	}
 	return sum;
 }
-int Card::judgeSizeB() const {
-	int sum = 0;
-	int count = 0;
+
+template <typename T>
+T Card<T>::judgeSizeB()  {
+	T sum = 0;
+	T count = 0;
 	for (int i = 0; i < valueB; i++) {
 		sum += cardValue[cardNumB[i]];
 		if (cardValue[cardNumB[i]] == 1) {
@@ -155,7 +169,9 @@ int Card::judgeSizeB() const {
 	}
 	return sum;
 }
-void Card::point() const {
+
+template <typename T>
+void Card<T>::point() const {
 	if (getMoney() <= 0) {
 		cout << "你沒錢了,請問是否要賣屁股給資工1B吳佳凱獲得更多金錢？" << endl;
 		exit(0);
@@ -163,14 +179,20 @@ void Card::point() const {
 	else
 		cout <<"現有金錢: "<< getMoney() << endl;
 }
-int Card::getValueA() const {
+
+template <typename T>
+T Card<T>::getValueA()  {
 	return valueA;
 }
-int Card::getValueB() const {
+
+template <typename T>
+T Card<T>::getValueB()  {
 	return valueB;
 }
-void Card::askCardA() {
-	int sum = 0;
+
+template <typename T>
+void Card<T>::askCardA() {
+	T sum = 0;
 	sum = judgeSizeA();
 	int randomValue = 0, x = 1;
 	for (; x == 1;) {
@@ -186,8 +208,10 @@ void Card::askCardA() {
 		}
 	}
 }
-void Card::askCardB() {
-	int sum = 0;
+
+template <typename T>
+void Card<T>::askCardB() {
+	T sum = 0;
 	sum = judgeSizeB();
 	int randomValue = 0, x = 1;
 	if (sum <= 21) {
@@ -205,7 +229,9 @@ void Card::askCardB() {
 		}
 	}
 }
-void Card::askCard12() {
+
+template <typename T>
+void Card<T>::askCard12() {
 	int randomValue = 0, x = 1;
 	for (; x == 1;) {
 		randomValue = rand() % 52 + 1;
@@ -226,7 +252,9 @@ void Card::askCard12() {
 		}
 	}
 }
-void Card::printNowA() const {
+
+template <typename T>
+void Card<T>::printNowA()  {
 	cout << "莊家目前手牌: ";
 	for (int i = 0, j = 1; i < valueA; i++, j++) {
 		if (SuitrandomA[j] <= 13)
@@ -242,7 +270,9 @@ void Card::printNowA() const {
 	cout << setw(2) << fixed << "手上點數: " << judgeSizeA();
 	cout << endl;
 }
-void Card::printNowB() const {
+
+template <typename T>
+void Card<T>::printNowB()  {
 	cout << "玩家目前手牌: ";
 	for (int i = 0, j = 1; i < valueB; i++, j++) {
 		if (SuitrandomB[j] <= 13)
@@ -258,7 +288,9 @@ void Card::printNowB() const {
 	cout <<setw(2)<<fixed<< "手上點數: " << judgeSizeB();
 	cout << endl;
 }
-void Card::end()  {
+
+template <typename T>
+void Card<T>::end()  {
 	cout << endl;
 	cout << "開始結算" << endl;
 	if (valueB == 5 && judgeSizeB() <= 21) {
